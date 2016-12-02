@@ -58,19 +58,19 @@ public class ExpenseServices
             expenseInformation.setExpenseStatus(1);
         }
 
+        insertBetterDealers(receiptId, listOfBetterDealers);
+
+        expenseInformationDao.addExpenseInformation(expenseInformation);
+    }
+
+    private void insertBetterDealers(int receiptId, List<DealerInformation> listOfBetterDealers)
+    {
         StringBuffer betterDealers = new StringBuffer();
         for(DealerInformation dealerInformation: listOfBetterDealers)
         {
             betterDealers.append(String.valueOf(dealerInformation.getId())).append(",");
         }
 
-        insertBetterDealerInfo(receiptId, betterDealers);
-
-        expenseInformationDao.addExpenseInformation(expenseInformation);
-    }
-
-    private void insertBetterDealerInfo(int receiptId, StringBuffer betterDealers)
-    {
         BetterDealerInformation betterDealerInformation = new BetterDealerInformation();
         betterDealerInformation.setReceiptId(receiptId);
         betterDealerInformation.setBetterDealers(betterDealers.toString());
