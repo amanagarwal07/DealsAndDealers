@@ -12,6 +12,17 @@ public class ExpenseInformation
     private int dealerId;
     private double quantity;
     private double price;
+    private int expenseStatus;
+
+    public int getExpenseStatus()
+    {
+        return expenseStatus;
+    }
+
+    public void setExpenseStatus(int expenseStatus)
+    {
+        this.expenseStatus = expenseStatus;
+    }
 
     public int getId()
     {

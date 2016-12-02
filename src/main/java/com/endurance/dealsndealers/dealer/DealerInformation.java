@@ -13,6 +13,7 @@ public class DealerInformation
     private String city;
     private String state;
     private String mobileNumber;
+    private double rating;
 
     public int getId()
     {
@@ -92,5 +93,15 @@ public class DealerInformation
     public void setMobileNumber(String mobileNumber)
     {
         this.mobileNumber = mobileNumber;
+    }
+
+    public double getRating()
+    {
+        return rating;
+    }
+
+    public void setRating(double rating)
+    {
+        this.rating = rating;
     }
 }
