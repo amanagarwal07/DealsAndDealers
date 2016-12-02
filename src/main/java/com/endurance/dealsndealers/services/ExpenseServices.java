@@ -1,5 +1,6 @@
 package com.endurance.dealsndealers.services;
 
+import com.endurance.dealsndealers.dealer.IDealerInformationDao;
 import com.endurance.dealsndealers.productsperdealer.IProductsDealersInformatonDao;
 import com.endurance.dealsndealers.dealer.DealerInformation;
 import com.endurance.dealsndealers.dealer.DealerInformationDao;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by aman.aga on 02/12/16.
@@ -60,6 +63,7 @@ public class ExpenseServices
     {
         IProductsDealersInformatonDao productsDealersInformatonDao =
                 (IProductsDealersInformatonDao) appContext.getBean("productsDealersInformationDao");
+
         List<ProductsDealersInformation> productsDealersInformationList = productsDealersInformatonDao.getDealerInfoForProduct(expenseInformation.getProductId());
 
         DealerInformationDao dealerInformationDao = (DealerInformationDao) appContext.getBean("dealerInformationDao");
@@ -70,27 +74,64 @@ public class ExpenseServices
 
         List<DealerInformation> result = new ArrayList<>();
 
-        for(ProductsDealersInformation productsDealersInformation : productsDealersInformationList)
-        {
-            DealerInformation dealerInformation = dealerInformationDao.getDealerInformationById(productsDealersInformation.getDealerId());
-            if(dealerInformation.getRating() >= dealer.getRating() && !dealerInformation.getCity().equals(dealer.getCity()))
-            {
-                long distanceOfDealerInMeters = getDistance(dealerInformation.getZipCode(),smbInformation.getZipCode());
-                double finalCost = productsDealersInformatonDao.getPriceForProductForDealer(dealerInformation.getId(),expenseInformation.getProductId());
-                finalCost = finalCost + distanceOfDealerInMeters * 0.4;
-                if(finalCost < productsDealersInformatonDao.getPriceForProductForDealer(expenseInformation.getDealerId(),expenseInformation.getProductId()))
-                {
-                    result.add(dealerInformation);
-                }
-            }
-            else if(dealerInformation.getRating() >= dealer.getRating() &&
-                productsDealersInformatonDao.getPriceForProductForDealer(dealerInformation.getId(),expenseInformation.getProductId()) <
-                        productsDealersInformatonDao.getPriceForProductForDealer(expenseInformation.getDealerId(),expenseInformation.getProductId()))
-            {
-                result.add(dealerInformation);
-            }
-        }
+        result = getBetterDealersInternal(expenseInformation, productsDealersInformatonDao, productsDealersInformationList, dealerInformationDao, dealer, smbInformation, result);
         return result;
+    }
+
+    private ArrayList<DealerInformation> getBetterDealersInternal(ExpenseInformation expenseInformation,
+                                                                  IProductsDealersInformatonDao productsDealersInformatonDao,
+                                                                  List<ProductsDealersInformation> dealerInformationList,
+                                                                  DealerInformationDao dealerInformationDao,
+                                                                  DealerInformation dealer,
+                                                                  SmbInformation smbInformation,
+                                                                  List<DealerInformation> result)
+    {
+        double quantity = expenseInformation.getQuantity();
+        double unitPrice = expenseInformation.getPrice()/quantity;
+
+        TreeMap<Double, DealerInformation> metricDealerMap = new TreeMap<>();
+        ArrayList<DealerInformation> listOfBetterDealers = new ArrayList<>();
+        double ratingOfDealer = 0;
+        double ratingDifference = 0;
+        double unitPriceForDealer = 0;
+        double unitPriceDifference = 0;
+        long distanceOfDealerInKms = 0;
+        double finalMetricValue = 0;
+        double ratingMetric = 0;
+        double unitPriceMetric = 0;
+        double distanceMetric = 0;
+        DealerInformation dealerInformation;
+
+        for(ProductsDealersInformation productsDealersInformation: dealerInformationList) {
+            dealerInformation = dealerInformationDao.getDealerInformationById(productsDealersInformation.getProductId());
+            ratingOfDealer = dealerInformation.getRating();
+            ratingDifference = ratingOfDealer - dealer.getRating();
+            unitPriceForDealer = productsDealersInformatonDao.getPriceForProductForDealer(dealerInformation.getId(), expenseInformation.getProductId());
+            unitPriceDifference = unitPriceForDealer - unitPrice;
+
+            distanceOfDealerInKms = getDistance(dealerInformation.getZipCode(), smbInformation.getZipCode()) / 1000;
+
+            ratingMetric = ((ratingDifference * 100) / ratingOfDealer) * ratingDifference;
+            unitPriceMetric = ((unitPriceDifference * 100) / unitPriceDifference) * unitPriceDifference;
+
+            distanceMetric = (distanceOfDealerInKms / 10000) * 50;
+
+            finalMetricValue = ratingMetric + unitPriceMetric - distanceMetric;
+
+            metricDealerMap.put(finalMetricValue, dealerInformation);
+        }
+
+        TreeMap<Double, DealerInformation> metricDealerMapDescending = new TreeMap<>(Collections.reverseOrder());
+        metricDealerMapDescending.putAll(metricDealerMap);
+        int numberOfDealers=10;
+
+        for(Double key : metricDealerMapDescending.keySet()){
+            listOfBetterDealers.add(metricDealerMapDescending.get(key));
+            numberOfDealers--;
+            if(numberOfDealers <= 0)    break;
+        }
+
+        return listOfBetterDealers;
     }
 
     private long getDistance(int origin, int destination)
@@ -107,6 +148,4 @@ public class ExpenseServices
         }
         return distance;
     }
-
-
 }
