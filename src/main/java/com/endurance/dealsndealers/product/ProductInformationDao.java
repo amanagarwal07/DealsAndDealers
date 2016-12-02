@@ -25,6 +25,7 @@ public class ProductInformationDao implements IProductInformationDao
     @Override
     public void insertProductInformation(ProductInformation productInformation)
     {
+        template.setCheckWriteOperations(false);
         template.persist(productInformation);
     }
 

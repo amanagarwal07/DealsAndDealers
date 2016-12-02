@@ -32,8 +32,7 @@ public class ExpenseServices
     @Autowired
     private ApplicationContext appContext;
 
-    public void addExpense( int id,
-                            int receiptId,
+    public void addExpense( int receiptId,
                             int smbId,
                             int productId,
                             int dealerId,
@@ -41,7 +40,6 @@ public class ExpenseServices
                             double price)
     {
         ExpenseInformation expenseInformation = new ExpenseInformation();
-        expenseInformation.setId(id);
         expenseInformation.setReceiptId(receiptId);
         expenseInformation.setDealerId(dealerId);
         expenseInformation.setSmbId(smbId);
