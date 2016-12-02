@@ -7,5 +7,5 @@ public interface IBetterDealerInformationDao
 {
     public void insertBetterDealerInformation(BetterDealerInformation betterDealerInformation);
 
-    public BetterDealerInformation getBetterDealerInformation(int receiptId);
+    public BetterDealerInformation getBetterDealerInformation(int expenseId);
 }

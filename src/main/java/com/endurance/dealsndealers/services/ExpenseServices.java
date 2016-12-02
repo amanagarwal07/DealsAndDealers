@@ -32,8 +32,7 @@ public class ExpenseServices
     @Autowired
     private ApplicationContext appContext;
 
-    public void addExpense( int id,
-                            int receiptId,
+    public void addExpense( int receiptId,
                             int smbId,
                             int productId,
                             int dealerId,
@@ -41,7 +40,6 @@ public class ExpenseServices
                             double price)
     {
         ExpenseInformation expenseInformation = new ExpenseInformation();
-        expenseInformation.setId(id);
         expenseInformation.setReceiptId(receiptId);
         expenseInformation.setDealerId(dealerId);
         expenseInformation.setSmbId(smbId);
@@ -57,13 +55,12 @@ public class ExpenseServices
         {
             expenseInformation.setExpenseStatus(1);
         }
-
-        insertBetterDealers(receiptId, listOfBetterDealers);
-
         expenseInformationDao.addExpenseInformation(expenseInformation);
+
+        insertBetterDealers(expenseInformation.getId(), listOfBetterDealers);
     }
 
-    private void insertBetterDealers(int receiptId, List<DealerInformation> listOfBetterDealers)
+    private void insertBetterDealers(int expenseId, List<DealerInformation> listOfBetterDealers)
     {
         StringBuffer betterDealers = new StringBuffer();
         for(DealerInformation dealerInformation: listOfBetterDealers)
@@ -72,7 +69,7 @@ public class ExpenseServices
         }
 
         BetterDealerInformation betterDealerInformation = new BetterDealerInformation();
-        betterDealerInformation.setReceiptId(receiptId);
+        betterDealerInformation.setExpenseId(expenseId);
         betterDealerInformation.setBetterDealers(betterDealers.toString());
         IBetterDealerInformationDao betterDealerInformationDao = (IBetterDealerInformationDao) appContext.getBean("betterDealerInformation");
         betterDealerInformationDao.insertBetterDealerInformation(betterDealerInformation);

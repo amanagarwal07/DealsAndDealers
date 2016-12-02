@@ -21,8 +21,8 @@ public class BetterDealerInformationDao implements IBetterDealerInformationDao
     }
 
     @Override
-    public BetterDealerInformation getBetterDealerInformation(int receiptId)
+    public BetterDealerInformation getBetterDealerInformation(int expenseId)
     {
-        return (BetterDealerInformation) template.get(BetterDealerInformation.class,receiptId);
+        return (BetterDealerInformation) template.get(BetterDealerInformation.class, expenseId);
     }
 }

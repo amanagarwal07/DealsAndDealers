@@ -17,12 +17,12 @@ public class FlaggedExpenses
     @Autowired
     private ApplicationContext appContext;
 
-    public List<DealerInformation> getBetterDealersForReceiptId(int receiptId)
+    public List<DealerInformation> getBetterDealersForReceiptId(int expenseId)
     {
-        IBetterDealerInformationDao expenseInformationDao =
+        IBetterDealerInformationDao betterDealerInformationDao =
                 (IBetterDealerInformationDao) appContext.getBean("betterDealerInformation");
 
-        String betterDealers =  expenseInformationDao.getBetterDealerInformation(receiptId).getBetterDealers();
+        String betterDealers =  betterDealerInformationDao.getBetterDealerInformation(expenseId).getBetterDealers();
         List<DealerInformation> dealerInformationList = new ArrayList<>();
         DealerInformationDao dealerInformationDao = (DealerInformationDao) appContext.getBean("dealerInformationDao");
 
