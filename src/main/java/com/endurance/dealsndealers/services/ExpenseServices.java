@@ -2,7 +2,6 @@ package com.endurance.dealsndealers.services;
 
 import com.endurance.dealsndealers.better_dealers.BetterDealerInformation;
 import com.endurance.dealsndealers.better_dealers.IBetterDealerInformationDao;
-import com.endurance.dealsndealers.dealer.IDealerInformationDao;
 import com.endurance.dealsndealers.productsperdealer.IProductsDealersInformatonDao;
 import com.endurance.dealsndealers.dealer.DealerInformation;
 import com.endurance.dealsndealers.dealer.DealerInformationDao;
