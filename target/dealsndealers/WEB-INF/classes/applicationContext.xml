@@ -29,6 +29,10 @@
         <property name="mappingResources">
             <list>
                 <value>SmbInformation.hbm.xml</value>
+                <value>DealerInformation.hbm.xml</value>
+                <value>ProductsDealersInformation.hbm.xml</value>
+                <value>ExpenseInformation.hbm.xml</value>
+                <value>ProductInformation.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -56,6 +60,21 @@
         <constructor-arg ref="template"></constructor-arg>
     </bean>
 
+    <bean id="dealerInformationDao" class="com.endurance.dealsndealers.dealer.DealerInformationDao">
+        <constructor-arg ref="template"></constructor-arg>
+    </bean>
+
+    <bean id="productInformationDao" class="com.endurance.dealsndealers.product.ProductInformationDao">
+        <constructor-arg ref="template"></constructor-arg>
+    </bean>
+
+    <bean id="expenseInformationDao" class="com.endurance.dealsndealers.expense.ExpenseInformationDao">
+        <constructor-arg ref="template"></constructor-arg>
+    </bean>
+
+    <bean id="productsDealersInformationDao" class="com.endurance.dealsndealers.productsperdealer.ProductsDealersInformationDao">
+        <constructor-arg ref="template"></constructor-arg>
+    </bean>
 
 </beans>
 

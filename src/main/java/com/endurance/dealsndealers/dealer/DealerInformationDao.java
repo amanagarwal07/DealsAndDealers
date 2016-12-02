@@ -1,6 +1,9 @@
 package com.endurance.dealsndealers.dealer;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+
+import java.util.List;
 
 /**
  * Created by chaitanya.m on 12/2/16.
@@ -14,6 +17,12 @@ public class DealerInformationDao implements IDealerInformationDao
         this.template = template;
     }
 
+    public List<DealerInformation> getDealers()
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(DealerInformation.class);
+        List<DealerInformation> result = (List<DealerInformation>) template.findByCriteria(criteria);
+        return result;
+    }
     @Override
     public DealerInformation getDealerInformationById(int id)
     {

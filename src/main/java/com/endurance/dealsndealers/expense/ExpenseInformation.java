@@ -1,5 +1,7 @@
 package com.endurance.dealsndealers.expense;
 
+import java.util.Date;
+
 /**
  * Created by chaitanya.m on 12/2/16.
  */
@@ -13,6 +15,8 @@ public class ExpenseInformation
     private double quantity;
     private double price;
     private int expenseStatus;
+    private Date creationDate;
+    private double rating;
 
     public int getExpenseStatus()
     {
@@ -92,5 +96,21 @@ public class ExpenseInformation
     public void setPrice(double price)
     {
         this.price = price;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
