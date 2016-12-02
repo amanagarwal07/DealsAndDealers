@@ -1,5 +1,7 @@
 package com.endurance.dealsndealers.services;
 
+import com.endurance.dealsndealers.better_dealers.BetterDealerInformation;
+import com.endurance.dealsndealers.better_dealers.IBetterDealerInformationDao;
 import com.endurance.dealsndealers.dealer.IDealerInformationDao;
 import com.endurance.dealsndealers.productsperdealer.IProductsDealersInformatonDao;
 import com.endurance.dealsndealers.dealer.DealerInformation;
@@ -48,15 +50,32 @@ public class ExpenseServices
         expenseInformation.setPrice(price);
 
         IExpenseInformationDao expenseInformationDao = (IExpenseInformationDao) appContext.getBean("expenseInformationDao");
-        List<DealerInformation> listOfBetterDealer = getListOfBetterDealers(expenseInformation);
+        List<DealerInformation> listOfBetterDealers = getListOfBetterDealers(expenseInformation);
 
-        int flag = listOfBetterDealer.size() > 0 ? 1:0;
+        int flag = listOfBetterDealers.size() > 0 ? 1:0;
         if(flag == 1)
         {
             expenseInformation.setExpenseStatus(1);
         }
 
+        StringBuffer betterDealers = new StringBuffer();
+        for(DealerInformation dealerInformation: listOfBetterDealers)
+        {
+            betterDealers.append(String.valueOf(dealerInformation.getId())).append(",");
+        }
+
+        insertBetterDealerInfo(receiptId, betterDealers);
+
         expenseInformationDao.addExpenseInformation(expenseInformation);
+    }
+
+    private void insertBetterDealerInfo(int receiptId, StringBuffer betterDealers)
+    {
+        BetterDealerInformation betterDealerInformation = new BetterDealerInformation();
+        betterDealerInformation.setReceiptId(receiptId);
+        betterDealerInformation.setBetterDealers(betterDealers.toString());
+        IBetterDealerInformationDao betterDealerInformationDao = (IBetterDealerInformationDao) appContext.getBean("betterDealerInformation");
+        betterDealerInformationDao.insertBetterDealerInformation(betterDealerInformation);
     }
 
     private List<DealerInformation> getListOfBetterDealers(ExpenseInformation expenseInformation)

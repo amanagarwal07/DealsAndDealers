@@ -20,7 +20,7 @@ public class FlaggedExpenses
     public List<DealerInformation> getBetterDealersForReceiptId(int receiptId)
     {
         IBetterDealerInformationDao expenseInformationDao =
-                (IBetterDealerInformationDao) appContext.getBean("betterDealersInformation");
+                (IBetterDealerInformationDao) appContext.getBean("betterDealerInformation");
 
         String betterDealers =  expenseInformationDao.getBetterDealerInformation(receiptId).getBetterDealers();
         List<DealerInformation> dealerInformationList = new ArrayList<>();

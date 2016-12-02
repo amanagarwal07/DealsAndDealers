@@ -76,7 +76,7 @@
         <constructor-arg ref="template"></constructor-arg>
     </bean>
 
-    <bean id="betterDealersInformation" class="com.endurance.dealsndealers.better_dealers.BetterDealerInformationDao">
+    <bean id="betterDealerInformation" class="com.endurance.dealsndealers.better_dealers.BetterDealerInformationDao">
         <constructor-arg ref="template"></constructor-arg>
     </bean>
 
