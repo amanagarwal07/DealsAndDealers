@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by aman.aga on 03/12/16.
  */
-public class FlaggedExpenses
+public class FlaggedExpenses implements IFlaggedExpenses
 {
     @Autowired
     private ApplicationContext appContext;

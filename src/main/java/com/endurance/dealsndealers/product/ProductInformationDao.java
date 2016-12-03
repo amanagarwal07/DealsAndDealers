@@ -32,12 +32,14 @@ public class ProductInformationDao implements IProductInformationDao
     @Override
     public void updateProductInformation(ProductInformation productInformation)
     {
+        template.setCheckWriteOperations(false);
         template.update(productInformation);
     }
 
     @Override
     public void deleteProductInformation(ProductInformation productInformation)
     {
+        template.setCheckWriteOperations(false);
         template.delete(productInformation);
     }
 }

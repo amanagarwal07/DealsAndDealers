@@ -18,4 +18,6 @@ public interface IProductsDealersInformatonDao
     public List<ProductsDealersInformation> getDealerInfoForProduct(int productId);
 
     public double getPriceForProductForDealer(int dealerID, int productId);
+
+    ProductsDealersInformation getInfoForProductForDealer(int dealerId, int productId);
 }

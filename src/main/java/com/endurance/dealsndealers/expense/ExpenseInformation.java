@@ -15,7 +15,7 @@ public class ExpenseInformation
     private double quantity;
     private double price;
     private int expenseStatus;
-    private Date creationDate;
+    private long creationDate;
     private double rating;
 
     public int getExpenseStatus()
@@ -98,11 +98,11 @@ public class ExpenseInformation
         this.price = price;
     }
 
-    public Date getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 

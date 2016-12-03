@@ -3,6 +3,7 @@ package com.endurance.dealsndealers.expense;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ public class ExpenseInformationDao implements IExpenseInformationDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void addExpenseInformation(ExpenseInformation expenseInformation) {
         template.persist(expenseInformation);
     }

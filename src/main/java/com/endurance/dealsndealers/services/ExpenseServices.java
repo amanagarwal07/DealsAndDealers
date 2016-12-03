@@ -2,6 +2,7 @@ package com.endurance.dealsndealers.services;
 
 import com.endurance.dealsndealers.better_dealers.BetterDealerInformation;
 import com.endurance.dealsndealers.better_dealers.IBetterDealerInformationDao;
+import com.endurance.dealsndealers.dealer.IDealerInformationDao;
 import com.endurance.dealsndealers.productsperdealer.IProductsDealersInformatonDao;
 import com.endurance.dealsndealers.dealer.DealerInformation;
 import com.endurance.dealsndealers.dealer.DealerInformationDao;
@@ -18,18 +19,16 @@ import com.google.maps.model.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by aman.aga on 02/12/16.
  */
-public class ExpenseServices
+public class ExpenseServices implements  IExpenseServices
 {
     @Autowired
     private ApplicationContext appContext;
+
 
     public void addExpense( int receiptId,
                             int smbId,
@@ -50,13 +49,34 @@ public class ExpenseServices
         List<DealerInformation> listOfBetterDealers = getListOfBetterDealers(expenseInformation);
 
         int flag = listOfBetterDealers.size() > 0 ? 1:0;
+
         if(flag == 1)
         {
             expenseInformation.setExpenseStatus(1);
         }
+        else
+        {
+            IProductsDealersInformatonDao productsDealersInformatonDao = (IProductsDealersInformatonDao) appContext.getBean("productsDealersInformationDao");
+            ProductsDealersInformation productsDealersInformation = productsDealersInformatonDao.getInfoForProductForDealer(dealerId , productId);
+            if(productsDealersInformation ==  null){
+                productsDealersInformation = new ProductsDealersInformation();
+                productsDealersInformation.setDealerId(dealerId);
+                productsDealersInformation.setProductId(productId);
+                productsDealersInformation.setPrice(price);
+                productsDealersInformatonDao.insertProductInformation(productsDealersInformation);
+            }
+            else {
+                productsDealersInformation.setPrice(price);
+                productsDealersInformatonDao.updateProductInformation(productsDealersInformation);
+            }
+        }
+        expenseInformation.setCreationDate(new Date().getTime());
         expenseInformationDao.addExpenseInformation(expenseInformation);
 
-        insertBetterDealers(expenseInformation.getId(), listOfBetterDealers);
+        if(flag == 1)
+        {
+            insertBetterDealers(expenseInformation.getId(), listOfBetterDealers);
+        }
     }
 
     private void insertBetterDealers(int expenseId, List<DealerInformation> listOfBetterDealers)

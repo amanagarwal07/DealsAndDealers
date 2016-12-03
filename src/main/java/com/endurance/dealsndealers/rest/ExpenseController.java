@@ -26,7 +26,7 @@ public class ExpenseController
     @Consumes(MediaType.APPLICATION_JSON)
     public void put(ExpenseInformation expenseInformation)
     {
-      new ExpenseServices().addExpense(expenseInformation.getReceiptId()
+        ((ExpenseServices)appContext.getBean("expenseServices")).addExpense(expenseInformation.getReceiptId()
               , expenseInformation.getSmbId(), expenseInformation.getProductId(),expenseInformation.getDealerId()
               , expenseInformation.getQuantity(), expenseInformation.getPrice());
     }
@@ -36,7 +36,8 @@ public class ExpenseController
     @Produces(MediaType.APPLICATION_JSON)
     public List<DealerInformation> getBetterDealersForExpense(@QueryParam("expenseId") int expenseId)
     {
-       return new FlaggedExpenses().getBetterDealersForReceiptId(expenseId);
+        return ((FlaggedExpenses)appContext.getBean("flaggedExpenses"))
+                .getBetterDealersForReceiptId(expenseId);
     }
 
     @GET

@@ -5,6 +5,7 @@ import com.endurance.dealsndealers.dealer.IDealerInformationDao;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class ProductsDealersInformationDao implements IProductsDealersInformaton
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void insertProductInformation(ProductsDealersInformation productsDealersInformation) {
         template.persist(productsDealersInformation);
     }
@@ -42,6 +44,16 @@ public class ProductsDealersInformationDao implements IProductsDealersInformaton
                .add(Restrictions.eq("productId", productId));
         List<ProductsDealersInformation> result = (List<ProductsDealersInformation>) template.findByCriteria(criteria);
         return result;
+    }
+
+    @Override
+    public ProductsDealersInformation getInfoForProductForDealer(int dealerId, int productId)
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(ProductsDealersInformation.class)
+                .add(Restrictions.eq("dealerId", dealerId))
+                .add(Restrictions.eq("productId", productId));
+        List<ProductsDealersInformation> result = (List<ProductsDealersInformation>) template.findByCriteria(criteria);
+        return (result == null || result.size() == 0) ? null : result.get(0);
     }
 
     @Override
