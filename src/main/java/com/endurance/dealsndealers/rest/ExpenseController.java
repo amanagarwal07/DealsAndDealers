@@ -1,16 +1,17 @@
 package com.endurance.dealsndealers.rest;
 
+import com.endurance.dealsndealers.dealer.DealerInformation;
 import com.endurance.dealsndealers.expense.ExpenseInformation;
 import com.endurance.dealsndealers.expense.IExpenseInformationDao;
 import com.endurance.dealsndealers.services.ExpenseServices;
+import com.endurance.dealsndealers.services.FlaggedExpenses;
 import com.endurance.dealsndealers.smb.SmbInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by chaitanya.m on 12/3/16.
@@ -28,5 +29,21 @@ public class ExpenseController
       new ExpenseServices().addExpense(expenseInformation.getReceiptId()
               , expenseInformation.getSmbId(), expenseInformation.getProductId(),expenseInformation.getDealerId()
               , expenseInformation.getQuantity(), expenseInformation.getPrice());
+    }
+
+    @GET
+    @Path("/getBetterDealersForExpense")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<DealerInformation> getBetterDealersForExpense(@QueryParam("expenseId") int expenseId)
+    {
+       return new FlaggedExpenses().getBetterDealersForReceiptId(expenseId);
+    }
+
+    @GET
+    @Path("/getFlaggedExpenses")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ExpenseInformation> getFlaggedExpenses(@QueryParam("smbId") int smbId)
+    {
+        return null;
     }
 }

@@ -5,9 +5,19 @@ package com.endurance.dealsndealers.better_dealers;
  */
 public class BetterDealerInformation
 {
-    public int expenseId;
-    public String betterDealers; // list of comma separated dealers
+    private int id;
+    private int expenseId;
+    private String betterDealers; // list of comma separated dealers
 
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public void setBetterDealers(String betterDealers)
     {

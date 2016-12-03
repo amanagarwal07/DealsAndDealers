@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.endurance.dealsndealers.better_dealers.BetterDealerInformation" table="better_dealers">
+        <id name="id" column="id">
+            <generator class="identity"></generator>
+        </id>
+        <property name="expenseId" column="expense_id" type="java.lang.Integer"/>
+        <property name="betterDealers" column="dealers" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

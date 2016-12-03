@@ -33,6 +33,7 @@
                 <value>ProductsDealersInformation.hbm.xml</value>
                 <value>ExpenseInformation.hbm.xml</value>
                 <value>ProductInformation.hbm.xml</value>
+                <value>BetterDealerInformation.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
