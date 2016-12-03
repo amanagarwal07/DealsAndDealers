@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 
 @Path("/smb")
@@ -25,6 +26,15 @@ public class SmbController
     {
         ISmbInformationDao smbInformationDao = (ISmbInformationDao) appContext.getBean("smbInformationDao");
         return smbInformationDao.getSmbInformationById(id);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllSmbs")
+    public List<SmbInformation> getAllSmbs()
+    {
+        ISmbInformationDao smbInformationDao = (ISmbInformationDao) appContext.getBean("smbInformationDao");
+        return smbInformationDao.getSmbs();
     }
 
     @PUT

@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by chaitanya.m on 12/3/16.
@@ -25,6 +26,15 @@ public class DealerController
     {
         IDealerInformationDao dealerInformationDao = (IDealerInformationDao) appContext.getBean("dealerInformationDao");
         return dealerInformationDao.getDealerInformationById(id);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllDealers")
+    public List<DealerInformation> getAllDealers()
+    {
+        IDealerInformationDao dealerInformationDao = (IDealerInformationDao) appContext.getBean("dealerInformationDao");
+        return dealerInformationDao.getDealers();
     }
 
     @PUT

@@ -22,13 +22,15 @@ public class ExpenseController
     @Autowired
     private ApplicationContext appContext;
 
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void put(ExpenseInformation expenseInformation)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/add")
+    public List<DealerInformation>  addExpense(ExpenseInformation expenseInformation)
     {
-        ((ExpenseServices)appContext.getBean("expenseServices")).addExpense(expenseInformation.getReceiptId()
+        return ((ExpenseServices)appContext.getBean("expenseServices")).addExpense(expenseInformation.getReceiptId()
               , expenseInformation.getSmbId(), expenseInformation.getProductId(),expenseInformation.getDealerId()
-              , expenseInformation.getQuantity(), expenseInformation.getPrice());
+              , expenseInformation.getQuantity(), expenseInformation.getPrice(), expenseInformation.getRating());
     }
 
     @GET

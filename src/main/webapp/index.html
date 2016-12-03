@@ -1,10 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-ng-app="dealsndealers">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Deals and Dealers</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <base href="/"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+
+    <link rel="stylesheet" href="/dealsndealers/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="/dealsndealers/md-data-table.min.css"/>
+    <link rel="stylesheet" href="/dealsndealers/dealsndealers.css"/>
 </head>
-<body>
+
+<body data-ng-controller="mainController" data-ng-cloak="" class="dealsndealers">
+<div class="header">
+    Deals And Dealers
+</div>
+
+<div>
+    <div layout="row" layout-sm="column" layout-margin>
+        <md-button data-ng-click="state = 'ALL_DATA'" class="md-raised md-primary">All Data</md-button>
+        <md-button data-ng-click="state = 'MANAGE_EXPENSE'" class="md-raised md-primary">Manage
+            Expense
+        </md-button>
+    </div>
+</div>
+<div data-ng-if=" state === 'ALL_DATA'">
+    <div class="details">SMB Details</div>
+    <md-table-container data-ng-if="!!showSmbGrid">
+        <table md-table>
+            <thead md-head>
+            <tr md-row>
+                <th md-column>Id</th>
+                <th md-column>Org Name</th>
+                <th md-column>Address Line 1</th>
+                <th md-column>Address Line 2</th>
+                <th md-column>Zip Code</th>
+                <th md-column>City</th>
+                <th md-column>State</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row ng-repeat="smb in smbDetails">
+                <td md-cell>{{smb.id}}</td>
+                <td md-cell>{{smb.orgName}}</td>
+                <td md-cell>{{smb.addressLine1}}</td>
+                <td md-cell>{{smb.addressLine2}}</td>
+                <td md-cell>{{smb.zipCode}}</td>
+                <td md-cell>{{smb.city}}</td>
+                <td md-cell>{{smb.state}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <div class="details">Product Details</div>
+    <md-table-container data-ng-if="!!showProductGrid">
+        <table md-table>
+            <thead md-head>
+            <tr md-row>
+                <th md-column>Id</th>
+                <th md-column>Name</th>
+                <th md-column>Category</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row ng-repeat="product in products">
+                <td md-cell>{{product.id}}</td>
+                <td md-cell>{{product.name}}</td>
+                <td md-cell>{{product.category}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <div class="details">Dealer Details</div>
+    <md-table-container data-ng-if="!!showDealerGrid">
+        <table md-table>
+            <thead md-head>
+            <tr md-row>
+                <th md-column>Id</th>
+                <th md-column>Name</th>
+                <th md-column>Address Line 1</th>
+                <th md-column>Address Line 2</th>
+                <th md-column>Zip Code</th>
+                <th md-column>City</th>
+                <th md-column>State</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row ng-repeat="dealer in dealers">
+                <td md-cell>{{dealer.id}}</td>
+                <td md-cell>{{dealer.name}}</td>
+                <td md-cell>{{dealer.addressLine1}}</td>
+                <td md-cell>{{dealer.addressLine2}}</td>
+                <td md-cell>{{dealer.zipCode}}</td>
+                <td md-cell>{{dealer.city}}</td>
+                <td md-cell>{{dealer.state}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</div>
+<div data-ng-if=" state === 'MANAGE_EXPENSE'">
+    <div layout="row" layout-sm="column" layout-margin style="padding: 30px; width:750px;">
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Business</label>
+            <md-select ng-model="expense.smbSelection">
+                <md-option ng-repeat="smb in smbDetails" ng-value="smb.id">
+                    {{smb.orgName}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Product</label>
+            <md-select ng-model="expense.productSelection">
+                <md-option ng-repeat="product in products" ng-value="product.id">
+                    {{product.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Dealer</label>
+            <md-select ng-model="expense.dealerSelection">
+                <md-option ng-repeat="dealer in dealers" ng-value="dealer.id">
+                    {{dealer.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout="row" layout-sm="column" layout-margin style="padding-left: 30px; width:750px;">
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Quantity</label>
+            <input type="text" ng-model="expense.quantity">
+        </md-input-container>
+
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Price</label>
+            <input type="text" ng-model="expense.price">
+        </md-input-container>
+
+        <md-input-container style="width:250px; margin-right: 20px;">
+            <label>Rating</label>
+            <input type="number" min="1" max="5" ng-model="expense.rating">
+        </md-input-container>
+
+    </div>
+
+    <div style="padding-left: 30px; margin-right: 30px;">
+        <div>
+            <md-button data-ng-click="addExpense()" class="md-raised md-primary">
+                Add Expense
+            </md-button>
+        </div>
+    </div>
+
+    <div data-ng-if="!!showSuccessMessage" style="margin-left: 38px; margin-top: 17px;">
+        Your expense has been recorded successfully.
+    </div>
+
+    <div data-ng-if="!!isBetterDealerPresent" style="padding-left: 30px; padding-top: 10px;">
+        <div class="details">Hey! There are few Dealers who can provide BETTER service.</div>
+        <md-table-container>
+            <table md-table>
+                <thead md-head>
+                <tr md-row>
+                    <th md-column>Contact</th>
+                    <th md-column>Name</th>
+                    <th md-column>Address Line 1</th>
+                    <th md-column>Address Line 2</th>
+                    <th md-column>Zip Code</th>
+                    <th md-column>City</th>
+                    <th md-column>State</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="dealer in betterDealers">
+                    <td md-cell>{{dealer.mobileNumber}}</td>
+                    <td md-cell>{{dealer.name}}</td>
+                    <td md-cell>{{dealer.addressLine1}}</td>
+                    <td md-cell>{{dealer.addressLine2}}</td>
+                    <td md-cell>{{dealer.zipCode}}</td>
+                    <td md-cell>{{dealer.city}}</td>
+                    <td md-cell>{{dealer.state}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </div>
+
+</div>
+<script src="/dealsndealers/angular/angular.min.js"></script>
+<script src="/dealsndealers/angular/angular-animate.min.js"></script>
+<script src="/dealsndealers/angular/angular-route.min.js"></script>
+<script src="/dealsndealers/angular/angular-aria.min.js"></script>
+<script src="/dealsndealers/angular/angular-messages.min.js"></script>
+<script src="/dealsndealers/angular-material/angular-material.min.js"></script>
+<script src="/dealsndealers/md-data-table.min.js"></script>
+
+<script src="/dealsndealers/dealsndealers.js"></script>
+
 
 </body>
 </html>

@@ -28,11 +28,13 @@ public class ProductsDealersInformationDao implements IProductsDealersInformaton
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void updateProductInformation(ProductsDealersInformation productsDealersInformation) {
         template.update(productsDealersInformation);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteProductInformation(ProductsDealersInformation productsDealersInformation) {
         template.delete(productsDealersInformation);
     }

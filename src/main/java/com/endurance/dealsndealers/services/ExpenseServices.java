@@ -30,12 +30,12 @@ public class ExpenseServices implements  IExpenseServices
     private ApplicationContext appContext;
 
 
-    public void addExpense( int receiptId,
+    public List<DealerInformation>  addExpense( int receiptId,
                             int smbId,
                             int productId,
                             int dealerId,
                             double quantity,
-                            double price)
+                            double price, double rating)
     {
         ExpenseInformation expenseInformation = new ExpenseInformation();
         expenseInformation.setReceiptId(receiptId);
@@ -44,6 +44,7 @@ public class ExpenseServices implements  IExpenseServices
         expenseInformation.setProductId(productId);
         expenseInformation.setQuantity(quantity);
         expenseInformation.setPrice(price);
+        expenseInformation.setRating(rating);
 
         IExpenseInformationDao expenseInformationDao = (IExpenseInformationDao) appContext.getBean("expenseInformationDao");
         List<DealerInformation> listOfBetterDealers = getListOfBetterDealers(expenseInformation);
@@ -62,21 +63,22 @@ public class ExpenseServices implements  IExpenseServices
                 productsDealersInformation = new ProductsDealersInformation();
                 productsDealersInformation.setDealerId(dealerId);
                 productsDealersInformation.setProductId(productId);
-                productsDealersInformation.setPrice(price);
+                productsDealersInformation.setPrice(price/quantity);
                 productsDealersInformatonDao.insertProductInformation(productsDealersInformation);
             }
             else {
-                productsDealersInformation.setPrice(price);
+                productsDealersInformation.setPrice(price/quantity);
                 productsDealersInformatonDao.updateProductInformation(productsDealersInformation);
             }
         }
-        expenseInformation.setCreationDate(new Date().getTime());
+        expenseInformation.setCreationDate((int)new Date().getTime());
         expenseInformationDao.addExpenseInformation(expenseInformation);
 
         if(flag == 1)
         {
-            insertBetterDealers(expenseInformation.getId(), listOfBetterDealers);
+            //insertBetterDealers(expenseInformation.getId(), listOfBetterDealers);
         }
+        return listOfBetterDealers;
     }
 
     private void insertBetterDealers(int expenseId, List<DealerInformation> listOfBetterDealers)
@@ -138,7 +140,8 @@ public class ExpenseServices implements  IExpenseServices
         DealerInformation dealerInformation;
 
         for(ProductsDealersInformation productsDealersInformation: dealerInformationList) {
-            dealerInformation = dealerInformationDao.getDealerInformationById(productsDealersInformation.getProductId());
+            if(productsDealersInformation.getDealerId() == expenseInformation.getDealerId()) continue;
+            dealerInformation = dealerInformationDao.getDealerInformationById(productsDealersInformation.getDealerId());
             ratingOfDealer = dealerInformation.getRating();
             ratingDifference = ratingOfDealer - dealer.getRating();
             unitPriceForDealer = productsDealersInformatonDao.getPriceForProductForDealer(dealerInformation.getId(), expenseInformation.getProductId());

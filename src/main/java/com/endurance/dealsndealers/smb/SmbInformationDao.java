@@ -1,6 +1,9 @@
 package com.endurance.dealsndealers.smb;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+
+import java.util.List;
 
 /**
  * Created by chaitanya.m on 12/2/16.
@@ -12,6 +15,14 @@ public class SmbInformationDao implements ISmbInformationDao
     public SmbInformationDao(HibernateTemplate template)
     {
         this.template = template;
+    }
+
+    @Override
+    public List<SmbInformation> getSmbs()
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(SmbInformation.class);
+        List<SmbInformation> result = (List<SmbInformation>) template.findByCriteria(criteria);
+        return result;
     }
 
     @Override

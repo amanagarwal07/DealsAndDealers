@@ -17,12 +17,14 @@ public class DealerInformationDao implements IDealerInformationDao
         this.template = template;
     }
 
+    @Override
     public List<DealerInformation> getDealers()
     {
         DetachedCriteria criteria = DetachedCriteria.forClass(DealerInformation.class);
         List<DealerInformation> result = (List<DealerInformation>) template.findByCriteria(criteria);
         return result;
     }
+
     @Override
     public DealerInformation getDealerInformationById(int id)
     {

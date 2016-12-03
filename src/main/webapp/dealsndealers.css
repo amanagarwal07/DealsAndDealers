@@ -1,0 +1,60 @@
+@FONT-FACE {
+    font-family: 'Opensans';
+    src: url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.eot'); /* IE9 Compat Modes*/
+    src: url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('/dealsndealers/opensans-fonts/Regular/OpenSans-Regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@FONT-FACE {
+    font-family: 'Opensans_Semibold';
+    src: url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.eot'); /* IE9 Compat Modes*/
+    src: url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.woff2') format('woff2'), /* Super Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('/dealsndealers/opensans-fonts/Semibold/OpenSans-Semibold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@FONT-FACE {
+    font-family: 'Opensans_Semibold_Italic';
+    src: url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.eot'); /* IE9 Compat Modes*/
+    src: url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.woff2') format('woff2'), /* Super Modern Browsers */
+    url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('/dealsndealers/opensans-fonts/SemiboldItalic/OpenSans-SemiboldItalic.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@FONT-FACE {
+    font-family: 'Opensans_Bold';
+    src: url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.eot'); /* IE9 Compat Modes*/
+    src: url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('/dealsndealers/opensans-fonts/Bold/OpenSans-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+.dealsndealers{
+    font-family: 'Opensans_Semibold';
+    font-size: 14px;
+    /*background-color: #03A9F4;*/
+}
+
+.header{
+    width: 100%;
+    /* height: 90px; */
+    background-color: #0091EA;
+    color: #fff;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    font-size: 17px;
+}
+
+.details{
+    padding: 18px;
+}
